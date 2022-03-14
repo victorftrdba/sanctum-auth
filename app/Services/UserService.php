@@ -45,11 +45,9 @@ class UserService {
 
     public function logout($request)
     {
-        $tokens = User::findOrFail($request->user()->id)->tokens;
+        $user = $request->user();
 
-        foreach ($tokens as $token) {
-            $token->delete();
-        }
+        $user->tokens()->delete();
 
         return response()->json(['logged' => false]);
     }
